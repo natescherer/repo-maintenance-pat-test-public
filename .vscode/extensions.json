@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "github.vscode-github-actions",
+    "hverlin.mise-vscode",
+    "jimeh.actionlint",
+    "maptz.regionfolder",
+    "owenlamont.ryl",
+    "redhat.vscode-yaml",
+    "rvben.rumdl",
+    "tekumara.typos-vscode",
+    "tombi-toml.tombi"
+  ]
+}

@@ -1,0 +1,14 @@
+[default]
+extend-ignore-re = [
+  '\(\[.*\]\(https:\/\/github\.com\/.*\)\)', # CHANGELOG.md links
+]
+
+[default.extend-words]
+# Author Name Components
+Nate = "Nate"
+Scherer = "Scherer"
+# GitHub Username
+natescherer = "natescherer"
+# Repo Name
+repo-maintenance-pat-test-public = "repo-maintenance-pat-test-public"
+# Custom Words Below

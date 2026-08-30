@@ -1,0 +1,58 @@
+{
+  "[jinja-json]": {
+    "editor.tabSize": 2
+  },
+  "[jinja-md]": {
+    "editor.tabSize": 2
+  },
+  "[jinja-toml]": {
+    "editor.tabSize": 2
+  },
+  "[markdown]": {
+    "editor.tabSize": 2
+  },
+  "files.associations": {
+  },
+  "json.schemaDownload.trustedDomains": {
+    "https://docs.renovatebot.com/renovate-schema.json": true
+  },
+  "markdown.validate.ignoredLinks": [
+    // START Ignore allcontributors links
+    "#audio*",
+    "#a11y*",
+    "#bug*",
+    "#blog*",
+    "#business*",
+    "#code*",
+    "#content*",
+    "#data*",
+    "#doc*",
+    "#design*",
+    "#example*",
+    "#eventOrganizing*",
+    "#financial*",
+    "#fundingFinding*",
+    "#ideas*",
+    "#infra*",
+    "#maintenance*",
+    "#mentoring*",
+    "#platform*",
+    "#plugin*",
+    "#projectManagement*",
+    "#promotion*",
+    "#question*",
+    "#research*",
+    "#review*",
+    "#security*",
+    "#tool*",
+    "#translation*",
+    "#test*",
+    "#tutorial*",
+    "#talk*",
+    "#userTesting*",
+    "#video*",
+    // END Ignore allcontributors links
+  ],
+  "ryl.configPath": ".config/ryl.toml",
+  "typos.config": ".config/typos.toml"
+}

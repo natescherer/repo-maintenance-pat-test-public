@@ -1,0 +1,192 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "dependencyDashboard": true,
+  "extends": [
+    "config:recommended",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "schedule": [
+    "* 0 1 * *"
+  ],
+  "copier": {
+    "description": "Copier template updates are handled via dedicated GitHub Actions Workflow/Azure DevOps pipeline",
+    "enabled": false
+  },
+  "packageRules": [
+    {
+      "description": "Group actionlint",
+      "matchPackageNames": [
+        "actionlint",
+        "rhysd/actionlint"
+      ],
+      "groupName": "actionlint"
+    },
+    {
+      "description": "Group apprise",
+      "matchPackageNames": [
+        "apprise",
+        "pipx:apprise"
+      ],
+      "groupName": "apprise"
+    },
+    {
+      "description": "Group cli",
+      "matchPackageNames": [
+        "cli/cli",
+        "aqua:cli/cli"
+      ],
+      "groupName": "cli"
+    },
+    {
+      "description": "Group committed",
+      "matchPackageNames": [
+        "committed",
+        "crate-ci/committed"
+      ],
+      "groupName": "committed"
+    },
+    {
+      "description": "Group copier",
+      "matchPackageNames": [
+        "copier",
+        "pipx:copier"
+      ],
+      "groupName": "copier"
+    },
+    {
+      "description": "Group knope",
+      "matchPackageNames": [
+        "knope-dev/knope"
+      ],
+      "groupName": "knope"
+    },
+    {
+      "description": "Group lychee",
+      "matchPackageNames": [
+        "lychee",
+        "lycheeverse/lychee"
+      ],
+      "groupName": "lychee"
+    },
+    {
+      "description": "Group mike",
+      "matchPackageNames": [
+        "mike",
+        "pipx:mike"
+      ],
+      "groupName": "mike"
+    },
+    {
+      "description": "Group prek",
+      "matchPackageNames": [
+        "j178/prek",
+        "aqua:j178/prek"
+      ],
+      "groupName": "prek"
+    },
+    {
+      "description": "Group ruff",
+      "matchPackageNames": [
+        "ruff",
+        "astral-sh/ruff"
+      ],
+      "groupName": "ruff"
+    },
+    {
+      "description": "Group rumdl",
+      "matchPackageNames": [
+        "rumdl",
+        "rvben/rumdl"
+      ],
+      "groupName": "rumdl"
+    },
+    {
+      "description": "Group ryl",
+      "matchPackageNames": [
+        "owenlamont/ryl",
+        "aqua:owenlamont/ryl"
+      ],
+      "groupName": "ryl"
+    },
+    {
+      "description": "Group shellcheck",
+      "matchPackageNames": [
+        "shellcheck",
+        "koalaman/shellcheck"
+      ],
+      "groupName": "shellcheck"
+    },
+    {
+      "description": "Group tombi",
+      "matchPackageNames": [
+        "tombi-toml/tombi",
+        "aqua:tombi-toml/tombi"
+      ],
+      "groupName": "tombi"
+    },
+    {
+      "description": "Group typos",
+      "matchPackageNames": [
+        "crate-ci/typos",
+        "aqua:crate-ci/typos"
+      ],
+      "groupName": "typos"
+    },
+    {
+      "description": "Group uv",
+      "matchPackageNames": [
+        "uv",
+        "astral-sh/uv"
+      ],
+      "groupName": "uv"
+    },
+    {
+      "description": "Group zensical",
+      "matchPackageNames": [
+        "zensical",
+        "pipx:zensical"
+      ],
+      "groupName": "zensical"
+    }
+  ],
+  "customManagers": [
+    {
+      "description": "Manager for the knope version pin in the Knope-based release workflows",
+      "customType": "regex",
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "knope-dev/knope",
+      "extractVersionTemplate": "^knope/v(?<version>.*)$",
+      "managerFilePatterns": [
+        "/(^|/)(?:{%.*%})?\\.github(?:{%.*%})?/workflows/(?:{%.*%})?release-.*\\.ya?ml(?:{%.*%})?(?:\\.jinja)?$/"
+      ],
+      "matchStrings": [
+        "version:\\s*(?<currentValue>[\\d.]+)"
+      ],
+      "versioningTemplate": "semver"
+    },
+    {
+      "description": "Manager for pipx git-sourced tools",
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/(^|/)mise(\\.\\w+)*\\.toml$/"
+      ],
+      "matchStrings": [
+        "\\[tools\\.\"pipx:git\\+https://github\\.com/(?<packageName>[^/]+/[^\"]+)\\.git\"\\]\\s+version = \"(?<currentValue>[^+\"]*)"
+      ],
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
+    },
+    {
+      "description": "Manager for pipx tool dependencies",
+      "customType": "regex",
+      "datasourceTemplate": "pypi",
+      "managerFilePatterns": [
+        "/mise\\..*toml/"
+      ],
+      "matchStrings": [
+        ".*?(--with\\s(?<depName>.+?)(\\[\\S+])*==(?<currentValue>[^\"\\s{]*))"
+      ],
+      "versioningTemplate": "pep440"
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+[tools]
+"pipx:apprise" = "1.12.0"
+jq = "1.8.2"

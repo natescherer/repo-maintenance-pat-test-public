@@ -1,0 +1,62 @@
+min_version = "2026.8.13"
+
+[hooks]
+postinstall = [
+  "{% set is_in_ci = get_env(name='CI', default='') %}{% if is_in_ci %}echo 'Not setting up git hooks as mise is running in CI!'{% else %}prek install -f -c .config/prek.toml{% endif %}",
+]
+
+[env]
+# Centralize tool caches under .cache/ instead of scattering them across the repo root.
+PYTHONPYCACHEPREFIX = ".cache/pycache"
+RUMDL_CACHE_DIR = ".cache/rumdl"
+
+[tasks.copier-update]
+run = "copier update --answers-file .config/copier-answers.yml --skip-answered --trust"
+
+[tasks.set-lifecycle]
+# Re-prompts just the `lifecycle` question (--ask overrides --skip-answered for it,
+# showing its normal choice menu with the current value pre-selected) without pulling
+# in a template update alongside it; `--vcs-ref=:current:` pins the update to the
+# currently-installed template version instead of the latest one. Both flags' minimum
+# copier versions are enforced by this project's own _min_copier_version.
+run = "copier update --answers-file .config/copier-answers.yml --skip-answered --trust --vcs-ref=:current: --ask lifecycle"
+
+[tasks.docs-server]
+run = "zensical serve"
+
+[tasks.provision-secrets]
+# Opt-in and separate from _tasks on purpose; see docs/token-permissions.md. `raw`
+# gives gh/az direct terminal control so each CLI's own masked prompt (gh's
+# Prompter.Password, az's knack.prompting.prompt_pass) reads the value straight from
+# the terminal; it never touches a command-line argument, mise's own logging, or a
+# script of ours.
+raw = true
+run = [
+  "gh secret set REPO_MAINTENANCE_PAT",
+  "gh secret set APPRISE_URL",
+]
+
+[tools]
+# Backends
+python = "3.14.7" # Used by copier
+uv = "0.12.2" # Used by pipx tools
+# Tools
+actionlint = "1.7.12"
+"aqua:cli/cli" = "2.97.0"
+"github:knope-dev/knope" = "knope/v0.23.0"
+"aqua:crate-ci/typos" = "1.49.0"
+"aqua:j178/prek" = "0.4.12"
+"aqua:owenlamont/ryl" = "0.21.0"
+"aqua:tombi-toml/tombi" = "1.2.6"
+committed = "1.1.11"
+lychee = "0.15.1"
+rumdl = "0.2.52"
+shellcheck = "0.11.0"
+
+[tools."pipx:copier"]
+version = "9.17.2"
+uvx_args = "--with jinja2-shell-extension==2.1.1"
+
+[tools."pipx:zensical"]
+version = "0.0.53"
+uvx_args = "--with git+https://github.com/squidfunk/mike.git@2.2.0+zensical-0.1.0"

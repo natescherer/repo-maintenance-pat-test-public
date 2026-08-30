@@ -1,0 +1,29 @@
+name: "Maint (Auto): All Contributors"
+
+on:
+  schedule:
+    - cron: 0 17 * * 1 # Every Monday at 5pm UTC
+  workflow_dispatch:
+
+concurrency:
+  group: all-contributors
+  cancel-in-progress: false
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  allcontributors-create-pr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    if: ${{ github.actor != 'allcontributors[bot]' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+      - name: Run All Contributors Auto Action
+        uses: JoshuaKGoldberg/all-contributors-auto-action@c7fc6295746c5946841efee0aaf37796a60bef71 # v0.6.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
